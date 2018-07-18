@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dx.fo.business.dao.StaffMapper">
+    <resultMap id="StaffMapper"
+               type="com.dx.fo.business.pojo.StaffPojo">
+        <id property="CId" column="C_ID" />
+        <result property="CName" column="C_Name" />
+        <result property="CPosition" column="C_Position" />
+        <result property="CSex" column="N_Sex" />
+        <result property="CTelPhone" column="C_Telphone" />
+
+    </resultMap>
+
+
+    <insert id="insertStaff" parameterType="com.dx.fo.business.pojo.StaffPojo">
+        insert into {t_staff}
+        (C_ID,C_Name,C_Position,N_Sex,C_Telphone)
+        values
+        (#{CId},#{CName},#{CPosition},#{CSex},#{CTelPhone})
+    </insert>
+    <update id="updateStaff" parameterType="com.dx.fo.business.pojo.StaffPojo">
+        update {t_staff}
+        set C_Name=#{CName}
+        where C_ID=#{CId}
+    </update>
+
+
+
+    <select id="selectStaff" resultMap="StaffMapper" parameterType="com.dx.fo.business.pojo.StaffPojo">
+        select C_ID,C_Name,C_Position,N_Sex,C_Telphone
+        from t_staff t
+        left join t_position p on
+
+    </select>
+
+
+
+</mapper>
