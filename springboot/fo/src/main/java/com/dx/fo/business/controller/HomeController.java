@@ -1,4 +1,4 @@
-package com.dx.fo.business;
+package com.dx.fo.business.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
     @RequestMapping("/")
     public String home(){
-        return "admin/index/index.html";
+        return "fo/index.html";
     }
 }

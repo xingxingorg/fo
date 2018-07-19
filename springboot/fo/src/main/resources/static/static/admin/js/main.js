@@ -7,7 +7,7 @@ layui.use(['layer', 'form', 'element', 'jquery', 'dialog'], function() {
 	var hideBtn = $('#hideBtn');
 	var mainLayout = $('#main-layout');
 	var mainMask = $('.main-mask');
-	//监听导航点击
+	//监听左侧导航点击
 	element.on('nav(leftNav)', function(elem) {
 		var navA = $(elem).find('a');
 		var id = navA.attr('data-id');
@@ -23,7 +23,7 @@ layui.use(['layer', 'form', 'element', 'jquery', 'dialog'], function() {
 		} else {
 			element.tabAdd('tab', {
 				title: text,
-				content: '<iframe src="admin/index/' + url + '" name="iframe' + id + '" class="iframe" framborder="0" data-id="' + id + '" scrolling="auto" width="100%"  height="100%"></iframe>',
+				content: '<iframe src="fo/' + url + '" name="iframe' + id + '" class="iframe" framborder="0" data-id="' + id + '" scrolling="auto" width="100%"  height="100%"></iframe>',
 				id: id
 			});
 			element.tabChange('tab', id);

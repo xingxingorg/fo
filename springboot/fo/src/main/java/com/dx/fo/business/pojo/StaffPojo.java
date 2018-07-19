@@ -7,13 +7,25 @@ public class StaffPojo {
     private String CId;
     private String CName;
     private String CPosition;
-    private String CSex;
+    private int NSex;
     private String CTelPhone;
     private String CPositionId;
     private double NBasicWage;
     private double NRadishPrice;
     private double NCarrotPrice;
     private double NLoadingPrice;
+    private int NValid;
+
+    public void setNValid(int NValid) {
+        this.NValid = NValid;
+    }
+
+
+    public int getNValid() {
+        return NValid;
+    }
+
+
     public String getCPositionId() {
         return CPositionId;
     }
@@ -68,8 +80,8 @@ public class StaffPojo {
         this.CPosition = CPosition;
     }
 
-    public void setCSex(String CSex) {
-        this.CSex = CSex;
+    public void setNSex(int NSex) {
+        this.NSex = NSex;
     }
 
     public void setCTelPhone(String CTelPhone) {
@@ -89,8 +101,8 @@ public class StaffPojo {
         return CPosition;
     }
 
-    public String getCSex() {
-        return CSex;
+    public int getNSex() {
+        return NSex;
     }
 
     public String getCTelPhone() {

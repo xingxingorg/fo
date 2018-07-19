@@ -6,30 +6,38 @@
         <id property="CId" column="C_ID" />
         <result property="CName" column="C_Name" />
         <result property="CPosition" column="C_Position" />
-        <result property="CSex" column="N_Sex" />
+        <result property="NSex" column="N_Sex" />
         <result property="CTelPhone" column="C_Telphone" />
-
+        <result property="NBasicWage" column="N_BasicWage" />
+        <result property="NRadishPrice" column="N_Radish_Price" />
+        <result property="NCarrotPrice" column="N_Carrot_Price" />
+        <result property="NLoadingPrice" column="N_Loading_Price" />
+        <result property="NValid" column="N_Valid" />
     </resultMap>
 
 
     <insert id="insertStaff" parameterType="com.dx.fo.business.pojo.StaffPojo">
-        insert into {t_staff}
-        (C_ID,C_Name,C_Position,N_Sex,C_Telphone)
+        insert into t_staff
+        (C_ID,C_Name,C_Position,N_Sex,C_Telphone,N_Valid)
         values
-        (#{CId},#{CName},#{CPosition},#{CSex},#{CTelPhone})
+        (#{CId},#{CName},#{CPositionId},#{NSex},#{CTelPhone},#{NValid})
     </insert>
     <update id="updateStaff" parameterType="com.dx.fo.business.pojo.StaffPojo">
         update {t_staff}
-        set C_Name=#{CName}
+        <set>
+            C_Name=#{CName}
+        </set>
+
         where C_ID=#{CId}
     </update>
 
 
 
     <select id="selectStaff" resultMap="StaffMapper" parameterType="com.dx.fo.business.pojo.StaffPojo">
-        select C_ID,C_Name,C_Position,N_Sex,C_Telphone
+        select t.C_ID,t.C_Name,p.C_NAME as C_Position ,N_Sex,C_Telphone,p.N_BasicWage,p.N_Radish_Price,p.N_Carrot_Price,p.N_Loading_Price,t.N_Valid
         from t_staff t
-        left join t_position p on
+        join t_position p on t.C_Position=p.C_ID
+
 
     </select>
 

@@ -25,7 +25,16 @@ layui.use(['form', 'jquery', 'laydate', 'layer', 'laypage', 'dialog',   'element
 	$('.addBtn').click(function() {
 		var url=$(this).attr('data-url');
 		//将iframeObj传递给父级窗口,执行操作完成刷新
-		parent.page("菜单添加", url, iframeObj, w = "700px", h = "620px");
+		//parent.page($(this).attr('name'), url, iframeObj, w = "600px", h = "400px");
+		staffId="sssssssssss";
+		layer.open({
+                        type: 2,
+                        title: '编辑',
+                        area : ['600px' , '400px'],
+                       // scrollbar: false,//禁止浏览器滚动
+                      // btn: ['确定', '取消'],
+                        content: "../"+url
+                        });
 		return false;
 
 	}).mouseenter(function() {
@@ -75,9 +84,18 @@ layui.use(['form', 'jquery', 'laydate', 'layer', 'laypage', 'dialog',   'element
 	$('#table-list').on('click', '.add-btn', function() {
 		var url=$(this).attr('data-url');
 		//将iframeObj传递给父级窗口
-		parent.page("菜单添加", url, iframeObj, w = "700px", h = "620px");
-		return false;
-	})
+		//parent.page($(this).attr('name'), url, iframeObj, w = "600px", h = "400px");
+		 layer.open({
+                type: 2,
+                title: '编辑',
+                area : ['600px' , '400px'],
+                scrollbar: false,//禁止浏览器滚动
+                content: url
+                });
+       	return false;
+	}).mouseenter(function() {
+      	dialog.tips('编辑', '.addBtn');
+     })
 	//列表删除
 	$('#table-list').on('click', '.del-btn', function() {
 		var url=$(this).attr('data-url');
