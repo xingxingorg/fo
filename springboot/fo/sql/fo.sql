@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50527
 File Encoding         : 65001
 
-Date: 2018-07-21 15:51:51
+Date: 2018-07-21 20:15:17
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -189,8 +189,8 @@ CREATE TABLE `t_staff` (
 -- Records of t_staff
 -- ----------------------------
 INSERT INTO `t_staff` VALUES ('01900eff9c17464881e4d2d5a8e9de03', '测试1', '', '2', '1', null, null, '1', '1', '2018-07-21 10:35:12');
-INSERT INTO `t_staff` VALUES ('4888eaf2f8ad4e12bc62df141b9b8086', '杜兴', '', '2', '1', null, null, '1', '1', '2018-07-21 11:13:23');
-INSERT INTO `t_staff` VALUES ('86e4ba22fbcb44cb83f089f21b8d7a82', '测试', '', '1', '2', null, null, '1', '1', '2018-07-21 13:51:42');
+INSERT INTO `t_staff` VALUES ('4888eaf2f8ad4e12bc62df141b9b8086', '杜兴', '', '2', '1', null, null, '2', '1', '2018-07-21 11:13:23');
+INSERT INTO `t_staff` VALUES ('86e4ba22fbcb44cb83f089f21b8d7a82', '测试', '11111111111', '1', '2', null, null, '1', '1', '2018-07-21 13:51:42');
 
 -- ----------------------------
 -- Table structure for t_user
@@ -246,7 +246,9 @@ CREATE TABLE `t_wagerecord` (
   `N_RealSalary` decimal(9,2) DEFAULT NULL COMMENT '实际工资',
   `N_WorkingHours` decimal(3,1) DEFAULT NULL COMMENT '工时',
   `N_OvertimeWork` decimal(3,1) DEFAULT NULL COMMENT '加班工时',
-  `D_InsertDate` date DEFAULT NULL COMMENT '记录日期',
+  `D_Year` char(4) DEFAULT NULL COMMENT '年',
+  `D_Month` char(2) DEFAULT NULL COMMENT '月',
+  `D_InsertDate` char(10) DEFAULT NULL COMMENT '记录日期',
   `DT_CreateDate` datetime DEFAULT NULL,
   PRIMARY KEY (`C_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='工资记录表';
@@ -254,3 +256,6 @@ CREATE TABLE `t_wagerecord` (
 -- ----------------------------
 -- Records of t_wagerecord
 -- ----------------------------
+INSERT INTO `t_wagerecord` VALUES ('cfc590b305c043c0bf4fc319efd25947', '01900eff9c17464881e4d2d5a8e9de03', '2', '50.00', '50.00', '50.00', '300.00', '1.0', '1.0', '2018', '07', '2018-07-21', '2018-07-21 18:23:02');
+INSERT INTO `t_wagerecord` VALUES ('e67cf8d76a24416fa9d933f22ff9437e', '4888eaf2f8ad4e12bc62df141b9b8086', '2', '50.00', '50.00', '50.00', '300.00', '1.0', '1.0', '2018', '07', '2018-07-21', '2018-07-21 18:23:02');
+INSERT INTO `t_wagerecord` VALUES ('f77d005d583849f7ad540c00af8a8aa0', '86e4ba22fbcb44cb83f089f21b8d7a82', '1', '1.00', '2.00', '3.00', '14.00', '4.0', '5.0', '2018', '07', '2018-07-21', '2018-07-21 18:28:21');
