@@ -99,6 +99,16 @@
 		       });
               //初始化
 		       	$(function(){
+		       	if(parent.data.pojo){
+		       	 	var obj=JSON.parse(parent.data.pojo);
+		       	 	if(obj.cid){
+		       	 	$("#NRadishQuantity").val(obj.nradishQuantity);
+                    $("#NCarrotQuantity").val(obj.ncarrotQuantity);
+                    $("#NLoadingQuantity").val(obj.nloadingQuantity);
+                    $("#NWorkingHours").val(obj.nworkingHours);
+                    $("#NOvertimeWork").val(obj.novertimeWork);
+                    }
+		       	 	}
 		          form.render();
 		          });
 			});
