@@ -10,6 +10,7 @@ public class PositionPojo {
     private double NRadishPrice;
     private double NCarrotPrice;
     private double NLoadingPrice;
+    private int NValid;
     public void setCId(String CId) {
         this.CId = CId;
     }
@@ -59,5 +60,11 @@ public class PositionPojo {
         return NLoadingPrice;
     }
 
+    public int getNValid() {
+        return NValid;
+    }
+    public void setNValid(int NValid) {
+        this.NValid = NValid;
+    }
 
 }

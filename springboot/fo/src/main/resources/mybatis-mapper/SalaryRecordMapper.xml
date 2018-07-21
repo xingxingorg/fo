@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dx.fo.business.dao.SalaryRecordMapper">
+
+    <insert id="batchSalary" parameterType="com.dx.fo.business.pojo.SalaryRecordPojo">
+        insert into t_wagerecord
+        (C_ID,C_Staff,C_Position,N_Radish_Quantity,N_Carrot_Quantity,N_Loading_Quantity,N_RealSalary,N_WorkingHours,N_OvertimeWork,D_InsertDate,DT_CreateDate,D_Year,D_Month)
+        values
+         <foreach collection="list" item="item" index="index" separator=",">
+             (#{item.CId},#{item.StaffId},#{item.CPositionId},
+             #{item.NRadishQuantity},#{item.NCarrotQuantity},#{item.NLoadingQuantity},
+             #{item.NRealSalary},#{item.NWorkingHours},#{item.NOvertimeWork},#{item.DInsertDate},now(),#{item.DYear},#{item.DMonth})
+         </foreach>
+    </insert>
+    <insert id="insertSalary" parameterType="com.dx.fo.business.pojo.SalaryRecordPojo">
+        insert into t_wagerecord
+        (C_ID,C_Staff,C_Position,N_Radish_Quantity,N_Carrot_Quantity,N_Loading_Quantity,N_RealSalary,N_WorkingHours,N_OvertimeWork,D_InsertDate,DT_CreateDate,D_Year,D_Month)
+        values
+        (#{CId},#{StaffId},#{CPositionId},#{NRadishQuantity},#{NCarrotQuantity},#{NLoadingQuantity},#{NRealSalary},#{NWorkingHours},#{NOvertimeWork},#{DInsertDate},now(),#{DYear},#{DMonth})
+    </insert>
+    <update id="updateSalary" parameterType="com.dx.fo.business.pojo.SalaryRecordPojo">
+        update t_wagerecord
+        <set>
+            C_Staff=#{StaffId},
+            C_Position=#{CPositionId},
+            N_Radish_Quantity=#{NRadishQuantity},
+            N_Carrot_Quantity=#{NCarrotQuantity},
+            N_Loading_Quantity=#{NLoadingQuantity},
+            N_RealSalary=#{NRealSalary},
+            N_WorkingHours=#{NWorkingHours},
+            N_OvertimeWork=#{NOvertimeWork},
+            D_InsertDate=#{DInsertDate},
+            D_Year=#{DYear},
+            D_Month=#{DMonth}
+        </set>
+        where C_ID=#{CId}
+    </update>
+    <delete id="deleteSalary">
+        delete from t_wagerecord
+        where C_Position=#{CPosition} and D_InsertDate=#{DInsertDate}
+
+    </delete>
+    <select id="selectSalaryRecord" resultType="com.dx.fo.business.pojo.SalaryRecordPojo" >
+        SELECT
+        w.C_ID AS CId,
+        t.C_Name AS CName,
+        t.C_ID AS StaffId,
+        p.C_ID AS CPositionId,
+        p.C_Name AS CPosition,
+        p.N_BasicWage AS NBasicWage,
+        p.N_Radish_Price AS NRadishPrice,
+        p.N_Carrot_Price AS NCarrotPrice,
+        p.N_Loading_Price AS NLoadingPrice,
+        w.N_Carrot_Quantity AS NCarrotQuantity,
+        w.N_Radish_Quantity AS NRadishQuantity,
+        w.N_Loading_Quantity AS NLoadingQuantity,
+        w.N_RealSalary AS NRealSalary,
+        w.N_WorkingHours AS NWorkingHours,
+        w.N_OvertimeWork AS NOvertimeWork,
+        w.D_InsertDate AS DInsertDate
+        FROM
+        t_staff t
+        JOIN t_position p ON t.C_Position = p.C_ID
+        left join t_wagerecord w on t.C_Id=w.C_Staff and p.C_ID=w.C_Position  and w.D_InsertDate=#{condi.DDate}
+        <where>
+            t.N_Valid=1
+            <if test="condi.CName != null and condi.CName != '' ">
+               and t.C_Name like concat('%',#{condi.CName},'%')
+            </if>
+
+        </where>
+
+    </select>
+
+
+    <select id="selectMonthRecord" resultType="com.dx.fo.business.pojo.SalaryRecordPojo" >
+        SELECT
+        t.C_Name AS CName,
+        t.C_ID AS StaffId,
+        p.C_ID AS CPositionId,
+        p.C_Name AS CPosition,
+        p.N_BasicWage AS NBasicWage,
+        sum(w.N_Carrot_Quantity) AS NCarrotQuantity,
+        sum(w.N_Radish_Quantity) AS NRadishQuantity,
+        sum(w.N_Loading_Quantity) AS NLoadingQuantity,
+        sum(w.N_RealSalary) AS NRealSalary,
+        sum(w.N_WorkingHours) AS NWorkingHours,
+        sum( w.N_OvertimeWork) AS NOvertimeWork
+        FROM
+        t_staff t
+        JOIN t_position p ON t.C_Position = p.C_ID
+        left join t_wagerecord w on t.C_Id=w.C_Staff and p.C_ID=w.C_Position  and w.D_InsertDate=#{condi.DDate}
+        <where>
+            w.D_Year=#{DYear}
+            and w.D_Month=#{DYear}
+            <if test="condi.CName != null and condi.CName != '' ">
+                and t.C_Name like concat('%',#{condi.CName},'%')
+            </if>
+
+        </where>
+        group by t.C_ID
+    </select>
+
+
+
+
+</mapper>

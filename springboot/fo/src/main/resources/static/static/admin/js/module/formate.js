@@ -37,6 +37,24 @@ layui.define(function(exports){
             var t = Y+'-'+m+'-'+d+' '+H+':'+i+':'+s;
             return t;
         },
+         ge_format:function(timestamp){
+                    if(timestamp){
+                        var date = new Date(timestamp*1000);
+                    }else{
+                        var date = new Date();
+                    }
+                    Y = date.getFullYear(),
+                        m = date.getMonth()+1,
+                        d = date.getDate();
+                    if(m<10){
+                        m = '0'+m;
+                    }
+                    if(d<10){
+                        d = '0'+d;
+                    }
+                    var t = Y+'-'+m+'-'+d;
+                    return t;
+                },
         /**
          * 日期函数转为时间戳格式
          * 传入一个日期时间格式,如果不传入就是获取现在的时间了

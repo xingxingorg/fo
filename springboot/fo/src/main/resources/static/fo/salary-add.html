@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>个人工资录入</title>
+		<link rel="stylesheet" type="text/css" href="../../static/admin/layui/css/layui.css" />
+		<link rel="stylesheet" type="text/css" href="../../static/admin/css/admin.css" />
+	</head>
+	<body>
+		<div class="wrap-container">
+			<form class="layui-form" style="width: 90%;padding-top: 20px;" lay-filter="staff">
+
+				<div class="layui-form-item">
+					<label class="layui-form-label">萝卜数：</label>
+					<div class="layui-input-block">
+						<input type="text" name="NRadishQuantity" id="NRadishQuantity" required lay-verify="" placeholder="请输入萝卜数" autocomplete="off" class="layui-input">
+					</div>
+
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">胡萝卜数：</label>
+					<div class="layui-input-block">
+						<input type="text" name="NCarrotQuantity" id="NCarrotQuantity" required lay-verify="" placeholder="请输入胡萝卜数" autocomplete="off" class="layui-input">
+					</div>
+
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">装卸数：</label>
+					<div class="layui-input-block">
+						<input type="text" name="NLoadingQuantity" id="NLoadingQuantity" required lay-verify="" placeholder="请输入装卸数" autocomplete="off" class="layui-input">
+					</div>
+
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">工时：</label>
+					<div class="layui-input-block">
+						<input type="text" name="NWorkingHours" id="NWorkingHours" required lay-verify="" placeholder="请输入工时" autocomplete="off" class="layui-input">
+					</div>
+
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">加班工时：</label>
+					<div class="layui-input-block">
+						<input type="text" name="NOvertimeWork" id="NOvertimeWork" required lay-verify="" placeholder="请输入加班工时" autocomplete="off" class="layui-input">
+					</div>
+
+				</div>
+
+					<div class="layui-form-item">
+						<div class="layui-input-block">
+							<button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo">保存</button>
+							<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+						</div>
+					</div>
+				</form>
+		</div>
+
+		<script src="../../static/admin/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			//Demo
+			layui.use(['form','layer'], function() {
+				var form = layui.form(),
+				$ = layui.jquery,
+				layer =  layui.layer ;
+
+
+				//监听提交
+				form.on('submit(formDemo)', function(data) {
+
+
+					if(parent.data.pojo){
+		       	 	var obj=JSON.parse(parent.data.pojo);
+		       	 	data.field.CId=obj.cid;
+		       	 	data.field.StaffId=obj.staffId;
+		       	 	data.field.CPositionId=obj.cpositionId;
+		       	 	data.field.DInsertDate=parent.data.date;
+		       	 	}
+
+				   	$.ajax({
+							type : "POST",
+							url : "/fo/addSalary",
+							//dataType : "json",
+							data : data.field,
+							success : function(json) {
+							  parent.data.refreshList();
+					 		var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                    		 parent.layer.close(index);
+							 parent.layer.msg("保存成功！", {time: 2000});
+							},
+							error:function(text){
+
+							}
+				     });
+
+				     return false;
+		       });
+              //初始化
+		       	$(function(){
+		          form.render();
+		          });
+			});
+
+		</script>
+	</body>
+
+</html>

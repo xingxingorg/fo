@@ -1,6 +1,10 @@
 package com.dx.fo.business.controller;
 
+import com.dx.fo.base.common.UUIDHelp;
+import com.dx.fo.business.dao.PositionMapper;
 import com.dx.fo.business.dao.StaffMapper;
+import com.dx.fo.business.pojo.ConditionPojo;
+import com.dx.fo.business.pojo.PositionPojo;
 import com.dx.fo.business.pojo.StaffPojo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,11 +22,46 @@ import java.util.List;
 @RequestMapping("/fo")
 public class PositionController {
     @Autowired
-    private StaffMapper staffMapper;
-    @RequestMapping(value="/position" ,method = RequestMethod.POST)
+    private PositionMapper positionMapper;
+
+    @RequestMapping(value="/validposition" ,method = RequestMethod.POST)
     @ResponseBody
-    public List<StaffPojo> selectPosition(String pojo){
-        List<StaffPojo> list=staffMapper.selectStaff(new HashMap<>());
+    public List<PositionPojo> selectValidPosition(String pojo){
+        List<PositionPojo> list=positionMapper.selectValidPosition();
         return list;
+    }
+    @RequestMapping(value = "/position", method = RequestMethod.POST)
+    @ResponseBody
+    public List<PositionPojo> selectPosition(ConditionPojo condi) {
+        List<PositionPojo> list = positionMapper.selectPosition(condi);
+        return list;
+    }
+
+    @RequestMapping(value = "/addposition", method = RequestMethod.POST)
+    @ResponseBody
+    public String addPosition(PositionPojo pojo) {
+        if (pojo.getCId() == null) {
+            pojo.setCId(UUIDHelp.newUUID());
+            positionMapper.insertPosition(pojo);
+        } else {
+            positionMapper.updatePosition(pojo);
+        }
+
+        return "ok";
+    }
+
+    @RequestMapping(value = "/delposition", method = RequestMethod.POST)
+    @ResponseBody
+    public String delPosition(String cid) {
+
+        positionMapper.delPosition(cid);
+        return "ok";
+    }
+
+    @RequestMapping(value = "/validposi", method = RequestMethod.POST)
+    @ResponseBody
+    public String validPosition(String cid, int valid) {
+        positionMapper.validPosition(cid, valid);
+        return "ok";
     }
 }

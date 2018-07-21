@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50527
 File Encoding         : 65001
 
-Date: 2018-07-19 20:47:02
+Date: 2018-07-21 15:51:51
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -106,14 +106,15 @@ CREATE TABLE `t_position` (
   `N_Loading_Price` decimal(9,2) DEFAULT NULL COMMENT '装车单价',
   `N_Valid` tinyint(4) NOT NULL DEFAULT '1' COMMENT '是否有效',
   `N_Order` smallint(6) NOT NULL DEFAULT '1' COMMENT '显示顺序',
+  `DT_CreateDate` datetime DEFAULT NULL,
   PRIMARY KEY (`C_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='职务表';
 
 -- ----------------------------
 -- Records of t_position
 -- ----------------------------
-INSERT INTO `t_position` VALUES ('1', '女洗菜工', '50.00', '7.00', '6.00', '0.00', '1', '1');
-INSERT INTO `t_position` VALUES ('2', '男洗菜工', '80.00', '8.00', '9.00', '4.00', '1', '1');
+INSERT INTO `t_position` VALUES ('1', '女洗菜工', '50.00', '1.00', '2.00', '3.00', '1', '1', null);
+INSERT INTO `t_position` VALUES ('2', '男洗菜工', '80.00', '1.00', '2.00', '3.00', '1', '1', null);
 
 -- ----------------------------
 -- Table structure for t_right
@@ -180,15 +181,16 @@ CREATE TABLE `t_staff` (
   `C_DEPT` varchar(300) DEFAULT NULL COMMENT '所在部门',
   `N_Valid` tinyint(4) NOT NULL DEFAULT '1' COMMENT '是否有效',
   `N_Order` smallint(6) NOT NULL DEFAULT '1' COMMENT '显示顺序',
+  `DT_CreateDate` datetime DEFAULT NULL,
   PRIMARY KEY (`C_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='职员表';
 
 -- ----------------------------
 -- Records of t_staff
 -- ----------------------------
-INSERT INTO `t_staff` VALUES ('1', '张大姐', '1212', '1', '1', '-1', '1', '1', '1');
-INSERT INTO `t_staff` VALUES ('2', '李婶', '23432', '1', '1', '-1', '2', '1', '1');
-INSERT INTO `t_staff` VALUES ('3', '张大哥', '234234', '2', '2', '-1', '1', '1', '1');
+INSERT INTO `t_staff` VALUES ('01900eff9c17464881e4d2d5a8e9de03', '测试1', '', '2', '1', null, null, '1', '1', '2018-07-21 10:35:12');
+INSERT INTO `t_staff` VALUES ('4888eaf2f8ad4e12bc62df141b9b8086', '杜兴', '', '2', '1', null, null, '1', '1', '2018-07-21 11:13:23');
+INSERT INTO `t_staff` VALUES ('86e4ba22fbcb44cb83f089f21b8d7a82', '测试', '', '1', '2', null, null, '1', '1', '2018-07-21 13:51:42');
 
 -- ----------------------------
 -- Table structure for t_user

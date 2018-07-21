@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dx.fo.business.dao.PositionMapper">
+
+    <insert id="insertPosition" parameterType="com.dx.fo.business.pojo.StaffPojo">
+        insert into t_position
+        (C_ID,C_Name,N_BasicWage,N_Radish_Price,N_Carrot_Price,N_Loading_Price,N_Valid,DT_CreateDate)
+        values
+        (#{CId},#{CName},#{NBasicWage},#{NRadishPrice},#{NCarrotPrice},#{NLoadingPrice},#{NValid},now())
+    </insert>
+    <update id="updatePosition" parameterType="com.dx.fo.business.pojo.StaffPojo">
+        update t_position
+        <set>
+            C_Name=#{CName},
+            N_BasicWage=#{NBasicWage},
+            N_Radish_Price=#{NRadishPrice},
+            N_Carrot_Price=#{NCarrotPrice},
+            N_Loading_Price=#{NLoadingPrice},
+            N_Valid=#{NValid},
+        </set>
+
+        where C_ID=#{CId}
+    </update>
+    <update id="validPosition" >
+        update t_position
+        <set>
+            N_Valid=#{NValid}
+        </set>
+        where C_ID=#{CId}
+    </update>
+    <delete id="delPosition">
+        delete from t_position
+        where C_ID=#{CId}
+
+    </delete>
+
+
+    <select id="selectPosition" resultType="com.dx.fo.business.pojo.PositionPojo" >
+        select t.C_ID as CId,t.C_Name as CName,t.N_BasicWage as NBasicWage,t.N_Radish_Price as NRadishPrice,
+        t.N_Carrot_Price as NCarrotPrice,t.N_Loading_Price as NLoadingPrice ,t.N_Valid as NValid
+        from t_position t
+        <where>
+            <if test="condi.CName != null and condi.CName != '' ">
+                t.C_Name like concat('%',#{condi.CName},'%')
+            </if>
+
+        </where>
+        order by t.DT_CreateDate desc
+
+    </select>
+
+    <select id="selectPositionById"  resultType="com.dx.fo.business.pojo.PositionPojo">
+        select t.C_ID as CId,t.C_Name as CName,t.N_BasicWage as NBasicWage,t.N_Radish_Price as NRadishPrice,
+        t.N_Carrot_Price as NCarrotPrice,t.N_Loading_Price as NLoadingPrice ,t.N_Valid as NValid
+        from t_position t
+        where  t.C_ID=#{CId}
+
+    </select>
+
+
+
+    <select id="selectValidPosition"  resultType="com.dx.fo.business.pojo.PositionPojo">
+        select C_ID as CId,C_Name as CName
+        from t_position
+        where N_Valid=1
+
+    </select>
+
+
+</mapper>

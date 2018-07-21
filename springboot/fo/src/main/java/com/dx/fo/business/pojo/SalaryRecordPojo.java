@@ -7,8 +7,10 @@ import java.util.Date;
  */
 public class SalaryRecordPojo {
     private String CId;
+    private String StaffId;
     private String CName;
     private String CPosition;
+    private String CPositionId;
     private String CSex;
     private double NBasicWage;
     private double NRadishPrice;
@@ -20,7 +22,28 @@ public class SalaryRecordPojo {
     private double NRealSalary;
     private double NWorkingHours;
     private double NOvertimeWork;
-    private Date DInsertDate;
+    private String DInsertDate;
+    private String DYear;
+    private String DMonth;
+    public String getDYear() {
+        return DYear;
+    }
+
+    public void setDYear(String DYear) {
+        this.DYear = DYear;
+    }
+
+
+    public String getDMonth() {
+        return DMonth;
+    }
+
+    public void setDMonth(String DMonth) {
+        this.DMonth = DMonth;
+    }
+
+
+
     public void setCId(String CId) {
         this.CId = CId;
     }
@@ -77,7 +100,7 @@ public class SalaryRecordPojo {
         this.NOvertimeWork = NOvertimeWork;
     }
 
-    public void setDInsertDate(Date DInsertDate) {
+    public void setDInsertDate(String DInsertDate) {
         this.DInsertDate = DInsertDate;
     }
 
@@ -137,11 +160,23 @@ public class SalaryRecordPojo {
         return NOvertimeWork;
     }
 
-    public Date getDInsertDate() {
+    public String getDInsertDate() {
         return DInsertDate;
     }
+    public String getCPositionId() {
+        return CPositionId;
+    }
 
+    public void setCPositionId(String CPositionId) {
+        this.CPositionId = CPositionId;
+    }
 
+    public String getStaffId() {
+        return StaffId;
+    }
 
+    public void setStaffId(String staffId) {
+        StaffId = staffId;
+    }
 
 }

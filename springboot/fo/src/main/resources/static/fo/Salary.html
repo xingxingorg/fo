@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>工资记录</title>
+		<link rel="stylesheet" type="text/css" href="../../static/admin/layui/css/layui.css" />
+		<link rel="stylesheet" type="text/css" href="../../static/admin/css/admin.css" />
+	</head>
+
+	<body>
+		<div class="page-content-wrap">
+				<form class="layui-form" action="">
+					<div class="layui-form-item">
+						<a class="layui-inline layui-btn layui-btn-normal addposi-btn " data-url="fo/salary-addposi.html" autocomplete="off" name="按职务批量录入"><i class="layui-icon">&#xe654;</i></a>
+
+						<div class="layui-inline">
+							<input type="text" name="name" id="name" required lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+						</div>
+						<div class="layui-inline">
+							<input class="layui-input" id="nowdate"  onclick="layui.laydate({elem: this,  istoday: true,type: 'month',format: 'YYYY-MM'})">
+						</div>
+						<div class="layui-inline layui-btn layui-btn-normal search" lay-submit="search">搜索</div>
+					</div>
+				</form>
+				<div class="layui-form" id="table-list">
+					<table class="layui-table" lay-even lay-skin="nob">
+						<colgroup>
+
+
+						</colgroup>
+						<thead>
+							<tr>
+								<th class="hidden-xs">序号</th>
+								<th >姓名</th>
+								<th >职务</th>
+								<th>基本工资</th>
+								<th>实发工资</th>
+								<th>萝卜数量</th>
+								<th>胡萝卜数量</th>
+								<th>装卸数量</th>
+								<th>旷工工时</th>
+								<th>加班工时</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="hidden-xs">1</td>
+
+
+							</tr>
+
+						</tbody>
+					</table>
+				</div>
+		</div>
+		<script src="../../static/admin/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../static/admin/js/salary.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+var data = {
+    sqlary: null,
+    index: ""
+}
+			layui.use(['jquery','form','laypage','laydate','formate'], function() {
+				var $=layui.jquery,laypage = layui.laypage,laydate = layui.laydate,formate=layui.formate;
+			function operation(data){
+			  var td="<td>"
+			         +"<div class='layui-inline'>"
+			         +"	<button class='layui-btn layui-btn-mini layui-btn-normal  edit-btn' data-id="+JSON.stringify(data)+" data-url='fo/salary-add.html' name='录入'><i class='layui-icon'>&#xe642;</i></button>"
+			         +"</div>"
+					 +"</td>";
+			   return td;
+			}
+			data.refreshList=function (){
+			   var condi = {
+            CName: $("#name").val(),
+            DDate:$("#nowdate").val()
+        }
+			   $.ajax({
+			type : "POST",
+			url : "/fo/monthRecord",
+			dataType : "json",
+			data : condi,
+			success : function(data) {
+			var $tbody=$(".layui-table tbody");
+			$tbody.empty();
+			for(var i=0;i<data.length;i++){
+				$tbody.append("<tr> </tr>");
+				var $tr=$tbody.find("tr:last");
+				$tr.append("<td>"+(i+1)+"</td>");
+	            $tr.append("<td>"+data[i].cname+"</td>");
+	            $tr.append("<td>"+data[i].cposition+"</td>");
+	            $tr.append("<td>"+data[i].nbasicWage+"</td>");
+	            $tr.append("<td>"+data[i].nrealSalary+"</td>");
+	            $tr.append("<td>"+data[i].nradishQuantity+"</td>");
+	            $tr.append("<td>"+data[i].ncarrotQuantity+"</td>");
+	            $tr.append("<td>"+data[i].nloadingQuantity+"</td>");
+	            $tr.append("<td>"+data[i].nworkingHours+"</td>");
+	            $tr.append("<td>"+data[i].novertimeWork+"</td>");
+                $tr.append(operation(data[i]));
+
+
+			}
+			},
+			error:function(text){
+
+			}
+		});
+			}
+
+			$(function(){
+			//$("#nowdate").val(formate.ge_format());
+			// layui.form().render();
+               data.refreshList();
+			});
+			});
+		</script>
+	</body>
+
+</html>
